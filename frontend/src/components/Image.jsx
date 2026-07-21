@@ -19,6 +19,11 @@ export default function Image() {
         console.log("Relative mouse x location in decimal: " + relX);
         console.log("Relative mouse y location in decimal: " + relY);
     };
+
+    const handleCheck = (e) => {
+        console.log("submit to the backend here");
+    };
+
     return (
         <div>
             <img src={waldo} onClick={onClick} alt="a where's waldo puzzle" />
@@ -33,6 +38,7 @@ export default function Image() {
                 }}
             >
                 "hello"
+                <button onClick={handleCheck}>Check</button>
             </div>
         </div>
     );
