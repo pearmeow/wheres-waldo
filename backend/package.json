@@ -4,7 +4,7 @@
   "description": "",
   "license": "MIT",
   "author": "Perry Huang",
-  "type": "commonjs",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "test": "jest --setupFiles dotenv/config"
