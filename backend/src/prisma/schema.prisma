@@ -13,9 +13,15 @@ datasource db {
 }
 
 model Picture {
-  id Int @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
+  path       String // path to file
+  characters Character[]
 }
 
 model Character {
-  id Int @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
+  picture   Picture @relation(fields: [pictureId], references: [id])
+  pictureId Int     @unique
+  positionX Float
+  positionY Float
 }
