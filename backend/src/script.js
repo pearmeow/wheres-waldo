@@ -3,7 +3,9 @@ import { prisma } from "./lib/prisma.js";
 async function main() {
     // Create a new user with a post
     const picture = await prisma.picture.create({
-        data: {},
+        data: {
+            path: "./assets/waldo.jpg",
+        },
     });
     console.log("Created picture:", picture);
 
