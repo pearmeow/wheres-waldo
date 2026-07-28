@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import routes from "./routes/index.js";
 
 const app = express();
 
@@ -9,9 +10,8 @@ app.use(express.json());
 // parses post requests
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-    res.send("hello");
-});
+app.use("/pictures", routes.pictures);
+// app.use("/leaderboard", routes.leaderboard);
 
 const PORT = process.env.PORT;
 app.listen(PORT, (err) => {

@@ -2,12 +2,22 @@ import { prisma } from "./lib/prisma.js";
 
 async function main() {
     // Create a new user with a post
-    const picture = await prisma.picture.create({
+    await prisma.picture.deleteMany();
+    await prisma.picture.create({
         data: {
             path: "./assets/waldo.jpg",
         },
     });
-    console.log("Created picture:", picture);
+    await prisma.picture.create({
+        data: {
+            path: "./assets/3.jpg",
+        },
+    });
+    await prisma.picture.create({
+        data: {
+            path: "./assets/4.jpg",
+        },
+    });
 
     // Fetch all users with their posts
     const allPics = await prisma.picture.findMany();
