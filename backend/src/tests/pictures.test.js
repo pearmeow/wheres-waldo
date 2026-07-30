@@ -1,6 +1,7 @@
 import request from "supertest";
 import express from "express";
-import { test } from "@jest/globals";
+import { afterAll, test } from "@jest/globals";
+import { prisma } from "../lib/prisma.js";
 
 import routes from "../routes/index.js";
 
@@ -13,4 +14,8 @@ test("pictures route works", (done) => {
         .get("/pictures")
         .expect("Content-Type", /json/)
         .expect(200, done);
+});
+
+afterAll(async () => {
+    await prisma.$disconnect();
 });
