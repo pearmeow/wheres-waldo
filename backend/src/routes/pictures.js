@@ -4,7 +4,7 @@ import * as pictures from "../controllers/pictures.js";
 
 const router = Router();
 
-router.get("/pictures", pictures.get);
-router.get("/pictures/:id", pictures.getId);
+router.get("/", pictures.get);
+router.get("/:id", pictures.getId);
 
 export default router;

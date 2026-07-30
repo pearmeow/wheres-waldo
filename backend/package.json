@@ -8,7 +8,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "node --watch ./src/app.js",
-    "test": "jest --setupFiles dotenv/config"
+    "test": "DOTENV_CONFIG_PATH=./src/.env node --experimental-vm-modules ./node_modules/jest/bin/jest.js --setupFiles=dotenv/config"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.0",
