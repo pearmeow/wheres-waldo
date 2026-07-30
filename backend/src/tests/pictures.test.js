@@ -16,6 +16,13 @@ test("pictures route works", (done) => {
         .expect(200, done);
 });
 
+test("singular picture works", (done) => {
+    request(app)
+        .get("/pictures/3")
+        .expect("Content-Type", /json/)
+        .expect(200, done);
+});
+
 afterAll(async () => {
     await prisma.$disconnect();
 });

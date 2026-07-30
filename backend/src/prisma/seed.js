@@ -1,8 +1,7 @@
-import { prisma } from "./lib/prisma.js";
+import { prisma } from "../lib/prisma.js";
 
 async function main() {
     // Create a new user with a post
-    await prisma.picture.deleteMany();
     await prisma.picture.create({
         data: {
             path: "./assets/waldo.jpg",
