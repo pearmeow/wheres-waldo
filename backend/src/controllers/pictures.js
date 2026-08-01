@@ -11,7 +11,9 @@ export const get = async (req, res) => {
 
 export const getId = async (req, res) => {
     const picture = await prisma.picture.findUnique({
-        where: { id: req.params.id },
+        where: {
+            id: Number(req.params.id),
+        },
     });
     res.sendFile(picture.path);
 };
