@@ -1,20 +1,21 @@
 import { prisma } from "../lib/prisma.js";
+import { resolve } from "path";
 
 async function main() {
     // Create a new user with a post
     await prisma.picture.create({
         data: {
-            path: "./assets/waldo.jpg",
+            path: resolve("./assets/waldo.jpg"),
         },
     });
     await prisma.picture.create({
         data: {
-            path: "./assets/3.jpg",
+            path: resolve("./assets/3.jpg"),
         },
     });
     await prisma.picture.create({
         data: {
-            path: "./assets/4.jpg",
+            path: resolve("./assets/4.jpg"),
         },
     });
 
