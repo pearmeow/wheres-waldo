@@ -4,16 +4,26 @@
   "description": "",
   "license": "MIT",
   "author": "Perry Huang",
-  "type": "commonjs",
+  "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "jest --setupFiles dotenv/config"
+    "dev": "node --watch ./src/app.js",
+    "test": "DOTENV_CONFIG_PATH=./src/.env node --experimental-vm-modules ./node_modules/jest/bin/jest.js --setupFiles=dotenv/config"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "@prisma/adapter-pg": "^7.9.0",
+    "@prisma/client": "^7.9.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.22.0",
+    "prisma": "^7.9.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "globals": "^17.8.0",
     "jest": "^30.4.2",
+    "prettier": "^3.9.6",
     "supertest": "^7.2.2"
   }
 }
