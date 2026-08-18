@@ -1,10 +1,16 @@
-import waldo from "../assets/waldo.jpg";
 import "./Image.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Image() {
     const [xPos, setXPos] = useState(100);
     const [yPos, setYPos] = useState(100);
+    const [blob, setBlob] = useState(null);
+    async function fetchImage() {
+        const blob = await fetch("http://localhost:3000/pictures/1");
+        const readBlob = await blob.blob();
+        console.log(readBlob);
+        setBlob(URL.createObjectURL(readBlob));
+    }
     const onClick = (e) => {
         const domImgRect = e.target.getBoundingClientRect();
         setXPos(e.clientX);
@@ -24,9 +30,14 @@ export default function Image() {
         console.log("submit to the backend here");
     };
 
+    if (!blob) {
+        fetchImage();
+        return <p>Loading...</p>;
+    }
+
     return (
         <div>
-            <img src={waldo} onClick={onClick} alt="a where's waldo puzzle" />
+            <img src={blob} onClick={onClick} alt="a where's waldo puzzle" />
             <div
                 style={{
                     position: "absolute",
