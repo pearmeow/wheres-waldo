@@ -15,6 +15,8 @@ export default function Image() {
         console.log(imgBlob);
         setImgURL(URL.createObjectURL(imgBlob));
     }
+
+    // TODO: make popup div not go past the borders of the image
     const onClick = (e) => {
         const domImgRect = e.target.getBoundingClientRect();
         setXPos(e.clientX);
