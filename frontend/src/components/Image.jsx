@@ -1,10 +1,22 @@
-import waldo from "../assets/waldo.jpg";
 import "./Image.css";
 import { useState } from "react";
 
 export default function Image() {
     const [xPos, setXPos] = useState(100);
     const [yPos, setYPos] = useState(100);
+    const [imgURL, setImgURL] = useState(null);
+    async function fetchImage() {
+        const blob = await fetch(
+            // TODO: the 1 should be replaced with some number from
+            // a parent component probably when the user chooses
+            import.meta.env.VITE_BACKEND_URL + "pictures/1",
+        );
+        const imgBlob = await blob.blob();
+        console.log(imgBlob);
+        setImgURL(URL.createObjectURL(imgBlob));
+    }
+
+    // TODO: make popup div not go past the borders of the image
     const onClick = (e) => {
         const domImgRect = e.target.getBoundingClientRect();
         setXPos(e.clientX);
@@ -20,13 +32,19 @@ export default function Image() {
         console.log("Relative mouse y location in decimal: " + relY);
     };
 
+    // TODO: implement checking character positions
     const handleCheck = (e) => {
         console.log("submit to the backend here");
     };
 
+    if (!imgURL) {
+        fetchImage();
+        return <p>Loading...</p>;
+    }
+
     return (
         <div>
-            <img src={waldo} onClick={onClick} alt="a where's waldo puzzle" />
+            <img src={imgURL} onClick={onClick} alt="a where's waldo puzzle" />
             <div
                 style={{
                     position: "absolute",

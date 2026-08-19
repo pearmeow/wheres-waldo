@@ -8,11 +8,12 @@
   "main": "app.js",
   "scripts": {
     "dev": "node --watch ./src/app.js",
-    "test": "DOTENV_CONFIG_PATH=./src/.env node --experimental-vm-modules ./node_modules/jest/bin/jest.js --setupFiles=dotenv/config"
+    "test": "DOTENV_CONFIG_PATH=./.env node --experimental-vm-modules ./node_modules/jest/bin/jest.js --setupFiles=dotenv/config"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "pg": "^8.22.0",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/cors": "^2.8.19",
     "eslint": "^10.8.0",
     "globals": "^17.8.0",
     "jest": "^30.4.2",
