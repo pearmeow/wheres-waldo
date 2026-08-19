@@ -1,15 +1,19 @@
 import "./Image.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Image() {
     const [xPos, setXPos] = useState(100);
     const [yPos, setYPos] = useState(100);
-    const [blob, setBlob] = useState(null);
+    const [imgURL, setImgURL] = useState(null);
     async function fetchImage() {
-        const blob = await fetch("http://localhost:3000/pictures/1");
-        const readBlob = await blob.blob();
-        console.log(readBlob);
-        setBlob(URL.createObjectURL(readBlob));
+        const blob = await fetch(
+            // TODO: the 1 should be replaced with some number from
+            // a parent component probably when the user chooses
+            import.meta.env.VITE_BACKEND_URL + "pictures/1",
+        );
+        const imgBlob = await blob.blob();
+        console.log(imgBlob);
+        setImgURL(URL.createObjectURL(imgBlob));
     }
     const onClick = (e) => {
         const domImgRect = e.target.getBoundingClientRect();
@@ -26,18 +30,19 @@ export default function Image() {
         console.log("Relative mouse y location in decimal: " + relY);
     };
 
+    // TODO: implement checking character positions
     const handleCheck = (e) => {
         console.log("submit to the backend here");
     };
 
-    if (!blob) {
+    if (!imgURL) {
         fetchImage();
         return <p>Loading...</p>;
     }
 
     return (
         <div>
-            <img src={blob} onClick={onClick} alt="a where's waldo puzzle" />
+            <img src={imgURL} onClick={onClick} alt="a where's waldo puzzle" />
             <div
                 style={{
                     position: "absolute",
