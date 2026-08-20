@@ -5,17 +5,17 @@ async function main() {
     // Create a new user with a post
     await prisma.picture.create({
         data: {
-            path: resolve("./assets/waldo.jpg"),
+            path: resolve("./assets/1.jpg"),
+        },
+    });
+    await prisma.picture.create({
+        data: {
+            path: resolve("./assets/2.jpg"),
         },
     });
     await prisma.picture.create({
         data: {
             path: resolve("./assets/3.jpg"),
-        },
-    });
-    await prisma.picture.create({
-        data: {
-            path: resolve("./assets/4.jpg"),
         },
     });
 
