@@ -21,9 +21,11 @@ export default function Image() {
     // TODO: make popup div not go past the borders of the image
     const onClick = (e) => {
         const domImgRect = e.target.getBoundingClientRect();
-        setXPos(e.clientX);
-        setYPos(e.clientY);
-        // console.log(domImgRect);
+        // +8 because by default the dom rectangle's x and y vals are 8
+        // might be kind of a hardcoded fix
+        setXPos(e.clientX - domImgRect.x + 8);
+        setYPos(e.clientY - domImgRect.y + 8);
+        console.log(domImgRect);
         // console.log("Mouse x location: " + e.clientX);
         // console.log("Mouse y location: " + e.clientY);
         // console.log("Relative mouse x location: " + (e.clientX - domImgRect.x));
