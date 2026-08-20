@@ -11,6 +11,8 @@ export default function Image() {
             // a parent component probably when the user chooses
             import.meta.env.VITE_BACKEND_URL + "pictures/1",
         );
+        // TODO: add error checking as well so we can display
+        // "backend refused to connect or something"
         const imgBlob = await blob.blob();
         console.log(imgBlob);
         setImgURL(URL.createObjectURL(imgBlob));
