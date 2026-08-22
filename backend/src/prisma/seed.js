@@ -18,7 +18,10 @@ async function main() {
             path: resolve("./assets/3.jpg"),
         },
     });
-
+    await prisma.character.create({
+        positionX: 0.6901408450704225,
+        positionY: 0.36019421226834264,
+    });
     // Fetch all users with their posts
     const allPics = await prisma.picture.findMany();
     console.log("All pics:", JSON.stringify(allPics, null, 2));
