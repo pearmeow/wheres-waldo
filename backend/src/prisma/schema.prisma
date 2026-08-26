@@ -21,7 +21,8 @@ model Picture {
 model Character {
   id        Int     @id @default(autoincrement())
   picture   Picture @relation(fields: [pictureId], references: [id])
-  pictureId Int     @unique
+  pictureId Int
   positionX Float
   positionY Float
+  name      String
 }

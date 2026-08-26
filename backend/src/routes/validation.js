@@ -4,6 +4,6 @@ import * as validation from "../controllers/validation.js";
 
 const router = Router();
 
-router.post("/:id", validation.post);
+router.post("/:characterId", validation.post);
 
 export default router;

@@ -4,7 +4,7 @@ import Image from "./components/Image";
 function App() {
     return (
         <>
-            <Image />
+            <Image imgNum={1} />
         </>
     );
 }
