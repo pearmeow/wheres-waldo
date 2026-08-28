@@ -1,5 +1,7 @@
 export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
     const handleCheck = async (e, charNum) => {
+        console.log(relX);
+        console.log(relY);
         const res = await fetch(
             import.meta.env.VITE_BACKEND_URL +
                 "pictures/" +
@@ -8,10 +10,13 @@ export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
                 charNum,
             {
                 method: "POST",
-                body: {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
                     x: relX,
                     y: relY,
-                },
+                }),
             },
         );
         const check = await res.json();
