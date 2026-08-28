@@ -1,6 +1,6 @@
 export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
     const handleCheck = async (e, charNum) => {
-        const check = await fetch(
+        const res = await fetch(
             import.meta.env.VITE_BACKEND_URL +
                 "pictures/" +
                 imgNum +
@@ -14,6 +14,7 @@ export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
                 },
             },
         );
+        const check = await res.json();
         console.log(check);
     };
 
@@ -22,7 +23,7 @@ export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
     const checkButtons = [];
     for (const char of characters) {
         checkButtons.push(
-            <button onClick={(e) => handleCheck(e, char.charNum)}>
+            <button key={char.id} onClick={(e) => handleCheck(e, char.id)}>
                 {char.name}
             </button>,
         );
