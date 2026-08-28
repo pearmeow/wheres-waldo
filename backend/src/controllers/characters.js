@@ -14,6 +14,11 @@ export const get = [
             where: {
                 pictureId: Number(data.pictureId),
             },
+            omit: {
+                // don't give the user the answers
+                positionX: true,
+                positionY: true,
+            },
         });
         console.log(characters);
         res.json(characters);
