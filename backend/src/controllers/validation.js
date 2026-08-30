@@ -11,7 +11,7 @@ export const post = [
         console.log(req.body);
         const result = validationResult(req);
         if (!result.isEmpty()) {
-            res.send({
+            res.status(404).send({
                 errors: result.array(),
             });
             return;
