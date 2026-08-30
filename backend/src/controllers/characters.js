@@ -10,17 +10,22 @@ export const get = [
             return;
         }
         const data = matchedData(req);
-        const characters = await prisma.character.findMany({
-            where: {
-                pictureId: Number(data.pictureId),
-            },
-            omit: {
-                // don't give the user the answers
-                positionX: true,
-                positionY: true,
-            },
-        });
-        console.log(characters);
-        res.json(characters);
+        try {
+            const characters = await prisma.character.findMany({
+                where: {
+                    pictureId: Number(data.pictureId),
+                },
+                omit: {
+                    // don't give the user the answers
+                    positionX: true,
+                    positionY: true,
+                },
+            });
+            console.log(characters);
+            res.json(characters);
+        } catch (err) {
+            console.log(err);
+            res.status(404).json({ errors: "Picture not found" });
+        }
     },
 ];

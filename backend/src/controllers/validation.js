@@ -18,20 +18,25 @@ export const post = [
         }
         const data = matchedData(req);
         let correct = false;
-        const char = await prisma.character.findUnique({
-            where: {
-                pictureId: Number(data.pictureId),
-                id: Number(data.characterId),
-            },
-        });
-        if (
-            Math.abs(char.positionX - data.x) < 0.01 &&
-            Math.abs(char.positionY - data.y) < 0.01
-        ) {
-            correct = true;
+        try {
+            const char = await prisma.character.findUniqueOrThrow({
+                where: {
+                    pictureId: Number(data.pictureId),
+                    id: Number(data.characterId),
+                },
+            });
+            if (
+                Math.abs(char.positionX - data.x) < 0.01 &&
+                Math.abs(char.positionY - data.y) < 0.01
+            ) {
+                correct = true;
+            }
+            res.json({
+                correct,
+            });
+        } catch (err) {
+            console.log(err);
+            res.status(404).send({ errors: "Not Found" });
         }
-        res.json({
-            correct,
-        });
     },
 ];

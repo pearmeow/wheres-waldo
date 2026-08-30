@@ -32,6 +32,9 @@ describe("singular image works", () => {
     test("image -1 doesn't work", (done) => {
         request(app).get("/pictures/-1").expect(404, done);
     });
+    test("image 9999 doesn't work", (done) => {
+        request(app).get("/pictures/9999").expect(404, done);
+    });
 });
 
 afterAll(async () => {

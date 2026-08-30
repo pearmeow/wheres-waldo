@@ -3,12 +3,17 @@ import * as validator from "../middleware/validator.js";
 import { matchedData, validationResult } from "express-validator";
 export const get = async (req, res) => {
     // returns ids of all pictures for frontend to ask for
-    const pictures = await prisma.picture.findMany({
-        omit: {
-            path: true,
-        },
-    });
-    res.json(pictures);
+    try {
+        const pictures = await prisma.picture.findMany({
+            omit: {
+                path: true,
+            },
+        });
+        res.json(pictures);
+    } catch (err) {
+        console.log(err);
+        res.status(404).send({ errors: "Not Found" });
+    }
 };
 
 export const getId = [
@@ -20,11 +25,16 @@ export const getId = [
             return;
         }
         const data = matchedData(req);
-        const picture = await prisma.picture.findUnique({
-            where: {
-                id: Number(data.pictureId),
-            },
-        });
-        res.sendFile(picture.path);
+        try {
+            const picture = await prisma.picture.findUniqueOrThrow({
+                where: {
+                    id: Number(data.pictureId),
+                },
+            });
+            res.sendFile(picture.path);
+        } catch (err) {
+            console.log(err);
+            res.status(404).send({ errors: "Not Found" });
+        }
     },
 ];
