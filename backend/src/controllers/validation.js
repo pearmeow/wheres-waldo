@@ -12,7 +12,7 @@ export const post = [
         const result = validationResult(req);
         if (!result.isEmpty()) {
             res.status(404).send({
-                errors: result.array(),
+                errors: result.array({ onlyFirstError: true }),
             });
             return;
         }

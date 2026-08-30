@@ -6,7 +6,9 @@ export const get = [
     async (req, res) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
-            res.status(404).send({ errors: result.array() });
+            res.status(404).send({
+                errors: result.array({ onlyFirstError: true }),
+            });
             return;
         }
         const data = matchedData(req);
