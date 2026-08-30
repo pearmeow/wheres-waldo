@@ -1,6 +1,6 @@
 import request from "supertest";
 import express from "express";
-import { afterAll, test } from "@jest/globals";
+import { afterAll, describe, test } from "@jest/globals";
 import { prisma } from "../lib/prisma.js";
 
 import routes from "../routes/index.js";
@@ -16,9 +16,22 @@ test("pictures route works", (done) => {
         .expect(200, done);
 });
 
-// kind of a bad test
-test("singular picture works", (done) => {
-    request(app).get("/pictures/3").expect(200, done);
+describe("singular image works", () => {
+    test("image 1 works", (done) => {
+        request(app)
+            .get("/pictures/1")
+            .expect("Content-Type", "image/jpeg")
+            .expect(200, done);
+    });
+    test("image 2 works", (done) => {
+        request(app)
+            .get("/pictures/2")
+            .expect("Content-Type", "image/jpeg")
+            .expect(200, done);
+    });
+    test("image -1 doesn't work", (done) => {
+        request(app).get("/pictures/-1").expect(404, done);
+    });
 });
 
 afterAll(async () => {
