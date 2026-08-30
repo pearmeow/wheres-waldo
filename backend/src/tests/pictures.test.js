@@ -1,7 +1,6 @@
 import request from "supertest";
 import express from "express";
-import { afterAll, describe, test } from "@jest/globals";
-import { prisma } from "../lib/prisma.js";
+import { describe, test } from "@jest/globals";
 
 import routes from "../routes/index.js";
 
@@ -35,8 +34,7 @@ describe("singular image works", () => {
     test("image 9999 doesn't work", (done) => {
         request(app).get("/pictures/9999").expect(404, done);
     });
-});
-
-afterAll(async () => {
-    await prisma.$disconnect();
+    test("image abcd doesn't work", (done) => {
+        request(app).get("/pictures/abcd").expect(404, done);
+    });
 });
