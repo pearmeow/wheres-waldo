@@ -1,10 +1,25 @@
 import { param, query, body } from "express-validator";
 
 export const createIdParamCheck = (idName) =>
-    param(idName).notEmpty().isInt({ min: 1 }).escape();
+    param(idName)
+        .notEmpty()
+        .withMessage(idName + " cannot be empty")
+        .isInt({ min: 1 })
+        .withMessage("Must be an integer greater than 0")
+        .escape();
 
 export const createIdQueryCheck = (idName) =>
-    query(idName).notEmpty().isInt({ min: 1 }).escape();
+    query(idName)
+        .notEmpty()
+        .withMessage(idName + " cannot be empty")
+        .isInt({ min: 1 })
+        .withMessage("Must be an integer greater than 0")
+        .escape();
 
 export const createFloatBodyCheck = (fieldName) =>
-    body(fieldName).notEmpty().isFloat().escape();
+    body(fieldName)
+        .notEmpty()
+        .withMessage(fieldName + " cannot be empty")
+        .isFloat()
+        .withMessage("Must be a float")
+        .escape();
