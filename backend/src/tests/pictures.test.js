@@ -18,7 +18,7 @@ test("pictures route works", (done) => {
 describe("singular image works", () => {
     test("image 1 works", (done) => {
         request(app)
-            .get("/pictures/1")
+            .get(`/pictures/1`)
             .expect("Content-Type", "image/jpeg")
             .expect(200, done);
     });
@@ -31,8 +31,8 @@ describe("singular image works", () => {
     test("image -1 doesn't work", (done) => {
         request(app).get("/pictures/-1").expect(404, done);
     });
-    test("image 9999 doesn't work", (done) => {
-        request(app).get("/pictures/9999").expect(404, done);
+    test("image 9999999 doesn't work", (done) => {
+        request(app).get("/pictures/9999999").expect(404, done);
     });
     test("image abcd doesn't work", (done) => {
         request(app).get("/pictures/abcd").expect(404, done);
