@@ -12,6 +12,9 @@ export default function Image({ imgNum }) {
     const [relY, setRelY] = useState(null);
     const [characters, setCharacters] = useState(null);
     const [imgURL, setImgURL] = useState(null);
+    const [text, setText] = useState(
+        <p>Please pick the character you would like to verify.</p>,
+    );
     const fetchImage = async () => {
         console.log("fetch image");
         const blob = await fetch(
@@ -56,6 +59,7 @@ export default function Image({ imgNum }) {
         const relY = (e.clientY - domImgRect.y) / domImgRect.height;
         setRelX(relX);
         setRelY(relY);
+        setText(<p>Please pick the character you would like to verify.</p>);
         console.log("Relative mouse x location in decimal: " + relX);
         console.log("Relative mouse y location in decimal: " + relY);
     };
@@ -81,6 +85,8 @@ export default function Image({ imgNum }) {
                     yPos={yPos}
                     relX={relX}
                     relY={relY}
+                    text={text}
+                    setText={setText}
                     imgNum={imgNum}
                     characters={characters}
                 />

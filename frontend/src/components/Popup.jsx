@@ -1,9 +1,15 @@
 import { useState } from "react";
 
-export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
-    const [text, setText] = useState(
-        "Please pick the character you'd like to verify",
-    );
+export default function Popup({
+    imgNum,
+    xPos,
+    yPos,
+    relX,
+    relY,
+    characters,
+    text,
+    setText,
+}) {
     const handleCheck = async (e, charNum) => {
         console.log(relX);
         console.log(relY);
