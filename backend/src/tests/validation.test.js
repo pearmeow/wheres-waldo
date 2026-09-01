@@ -26,6 +26,27 @@ describe("validation tests", () => {
             expect(res.body.errors).toBeUndefined();
             expect(res.body.correct).toBeFalsy();
         });
+        test("returns errors on out of bounds coordinates", async () => {
+            const res = await request(app)
+                .post("/pictures/1/validation/1")
+                .send({ x: -1, y: -1 });
+            expect(res.body.errors).toBeDefined();
+            expect(res.body.correct).toBeFalsy();
+        });
+        test("returns errors on string coordinates", async () => {
+            const res = await request(app)
+                .post("/pictures/1/validation/1")
+                .send({ x: "asdf", y: "jkl;" });
+            expect(res.body.errors).toBeDefined();
+            expect(res.body.correct).toBeFalsy();
+        });
+        test("returns errors on object coordinates", async () => {
+            const res = await request(app)
+                .post("/pictures/1/validation/1")
+                .send({ x: { abc: "d", y: 3 }, y: { x: { x: 2 } } });
+            expect(res.body.errors).toBeDefined();
+            expect(res.body.correct).toBeFalsy();
+        });
         test("returns errors without coordinates", async () => {
             const res = await request(app)
                 .post("/pictures/1/validation/1")

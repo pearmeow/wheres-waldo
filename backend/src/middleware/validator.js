@@ -20,6 +20,6 @@ export const createFloatBodyCheck = (fieldName) =>
     body(fieldName)
         .notEmpty()
         .withMessage(fieldName + " cannot be empty")
-        .isFloat()
+        .isFloat({ min: 0.0, max: 1.0 })
         .withMessage("Must be a float")
         .escape();
