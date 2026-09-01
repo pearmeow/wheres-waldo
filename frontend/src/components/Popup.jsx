@@ -1,4 +1,9 @@
+import { useState } from "react";
+
 export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
+    const [text, setText] = useState(
+        "Please pick the character you'd like to verify",
+    );
     const handleCheck = async (e, charNum) => {
         console.log(relX);
         console.log(relY);
@@ -20,7 +25,11 @@ export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
             },
         );
         const check = await res.json();
-        console.log(check);
+        if (check.correct) {
+            setText(<p>You got it!</p>);
+        } else {
+            setText(<p>Try again.</p>);
+        }
     };
 
     // each button has a character's name and will fetch from backend to
@@ -45,7 +54,8 @@ export default function Popup({ imgNum, xPos, yPos, relX, relY, characters }) {
                 background: "#FFFFFF",
             }}
         >
-            {checkButtons}
+            {text}
+            <p>{checkButtons}</p>
         </div>
     );
 }
