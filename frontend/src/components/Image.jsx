@@ -1,6 +1,7 @@
 import "./Image.css";
 import Popup from "./Popup.jsx";
 import { useState } from "react";
+import useComponentVisible from "../hooks/useComponentVisible.jsx";
 
 export default function Image({ imgNum }) {
     // xPos and yPost are used to position the popup div
@@ -15,6 +16,8 @@ export default function Image({ imgNum }) {
     const [text, setText] = useState(
         <p>Please pick the character you would like to verify.</p>,
     );
+    const { ref, isComponentVisible, setIsComponentVisible } =
+        useComponentVisible(true);
     const fetchImage = async () => {
         console.log("fetch image");
         const blob = await fetch(
@@ -48,8 +51,8 @@ export default function Image({ imgNum }) {
         const domImgRect = e.target.getBoundingClientRect();
         // +8 because by default the dom rectangle's x and y vals are 8
         // might be kind of a hardcoded fix
-        setXPos(e.clientX - domImgRect.x + 8);
-        setYPos(e.clientY - domImgRect.y + 8);
+        setXPos(e.clientX);
+        setYPos(e.clientY);
         console.log(domImgRect);
         // console.log("Mouse x location: " + e.clientX);
         // console.log("Mouse y location: " + e.clientY);
@@ -59,6 +62,7 @@ export default function Image({ imgNum }) {
         const relY = (e.clientY - domImgRect.y) / domImgRect.height;
         setRelX(relX);
         setRelY(relY);
+        setIsComponentVisible(true);
         setText(<p>Please pick the character you would like to verify.</p>);
         console.log("Relative mouse x location in decimal: " + relX);
         console.log("Relative mouse y location in decimal: " + relY);
@@ -77,7 +81,7 @@ export default function Image({ imgNum }) {
     }
 
     return (
-        <div>
+        <div className={"imgContainer"} ref={ref}>
             <img src={imgURL} onClick={onClick} alt="a where's waldo puzzle" />
             {xPos && yPos && relX && relY && (
                 <Popup
@@ -86,6 +90,7 @@ export default function Image({ imgNum }) {
                     relX={relX}
                     relY={relY}
                     text={text}
+                    hidden={!isComponentVisible}
                     setText={setText}
                     imgNum={imgNum}
                     characters={characters}

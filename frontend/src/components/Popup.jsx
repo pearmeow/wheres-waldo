@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function Popup({
     imgNum,
     xPos,
@@ -9,6 +7,7 @@ export default function Popup({
     characters,
     text,
     setText,
+    hidden,
 }) {
     const handleCheck = async (e, charNum) => {
         console.log(relX);
@@ -51,10 +50,10 @@ export default function Popup({
 
     return (
         <div
+            hidden={hidden}
             style={{
                 position: "absolute",
-                height: "100px",
-                width: "200px",
+                width: "min(200px, 20vw)",
                 top: yPos + "px",
                 left: xPos + "px",
                 background: "#FFFFFF",
