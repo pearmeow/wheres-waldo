@@ -48,8 +48,8 @@ export default function Image({ imgNum }) {
         const domImgRect = e.target.getBoundingClientRect();
         // +8 because by default the dom rectangle's x and y vals are 8
         // might be kind of a hardcoded fix
-        setXPos(e.clientX - domImgRect.x + 8);
-        setYPos(e.clientY - domImgRect.y + 8);
+        setXPos(e.clientX);
+        setYPos(e.clientY);
         console.log(domImgRect);
         // console.log("Mouse x location: " + e.clientX);
         // console.log("Mouse y location: " + e.clientY);
@@ -77,7 +77,7 @@ export default function Image({ imgNum }) {
     }
 
     return (
-        <div>
+        <div className={"imgContainer"}>
             <img src={imgURL} onClick={onClick} alt="a where's waldo puzzle" />
             {xPos && yPos && relX && relY && (
                 <Popup
