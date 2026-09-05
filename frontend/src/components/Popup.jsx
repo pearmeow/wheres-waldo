@@ -53,8 +53,7 @@ export default function Popup({
             hidden={hidden}
             style={{
                 position: "absolute",
-                height: "100px",
-                width: "200px",
+                width: "min(200px, 20vw)",
                 top: yPos + "px",
                 left: xPos + "px",
                 background: "#FFFFFF",
