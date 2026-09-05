@@ -1,16 +1,11 @@
 body {
-    padding: 0;
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 img {
     max-height: 95vh;
     max-width: min(100%, 95vw);
-    padding: 20px;
-}
-
-.imgContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

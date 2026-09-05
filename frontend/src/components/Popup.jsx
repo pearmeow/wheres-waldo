@@ -7,6 +7,7 @@ export default function Popup({
     characters,
     text,
     setText,
+    hidden,
 }) {
     const handleCheck = async (e, charNum) => {
         console.log(relX);
@@ -49,6 +50,7 @@ export default function Popup({
 
     return (
         <div
+            hidden={hidden}
             style={{
                 position: "absolute",
                 height: "100px",
