@@ -9,3 +9,9 @@ img {
     max-height: 95vh;
     max-width: min(100%, 95vw);
 }
+
+.imgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
