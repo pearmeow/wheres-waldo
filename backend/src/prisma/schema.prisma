@@ -25,4 +25,5 @@ model Character {
   positionX Float
   positionY Float
   name      String
+  path      String
 }

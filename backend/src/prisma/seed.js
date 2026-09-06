@@ -5,17 +5,17 @@ async function main() {
     // Create a new user with a post
     await prisma.picture.create({
         data: {
-            path: resolve("./assets/1.jpg"),
+            path: resolve("../assets/1.jpg"),
         },
     });
     await prisma.picture.create({
         data: {
-            path: resolve("./assets/2.jpg"),
+            path: resolve("../assets/2.jpg"),
         },
     });
     await prisma.picture.create({
         data: {
-            path: resolve("./assets/3.jpg"),
+            path: resolve("../assets/3.jpg"),
         },
     });
     await prisma.character.create({
@@ -24,6 +24,7 @@ async function main() {
             positionX: 0.6895787139689579,
             positionY: 0.3609910384818134,
             name: "Waldo",
+            path: resolve("../assets/1_waldo_mugshot.png"),
         },
     });
     // Fetch all users with their posts
