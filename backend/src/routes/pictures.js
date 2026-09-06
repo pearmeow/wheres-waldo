@@ -10,5 +10,6 @@ router.get("/", pictures.get);
 router.get("/:pictureId", pictures.getId);
 router.post("/:pictureId/validation/:characterId", validation.post);
 router.get("/:pictureId/characters", characters.get);
+router.get("/:pictureId/characters/:characterId", characters.getId);
 
 export default router;
