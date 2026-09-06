@@ -4,6 +4,7 @@ import { useState } from "react";
 import useComponentVisible from "../hooks/useComponentVisible.jsx";
 
 export default function Image({ imgNum }) {
+    const [err, setErr] = useState(null);
     // xPos and yPost are used to position the popup div
     const [xPos, setXPos] = useState(null);
     const [yPos, setYPos] = useState(null);
@@ -16,6 +17,7 @@ export default function Image({ imgNum }) {
     const [text, setText] = useState(
         <p>Please pick the character you would like to verify.</p>,
     );
+    // hook for detecting outside clicks
     const { ref, isComponentVisible, setIsComponentVisible } =
         useComponentVisible(true);
     const fetchImage = async () => {
@@ -23,6 +25,10 @@ export default function Image({ imgNum }) {
         const blob = await fetch(
             import.meta.env.VITE_BACKEND_URL + "pictures/" + imgNum,
         );
+        if (!blob.ok) {
+            setErr("Failed to fetch image");
+            return;
+        }
         // TODO: add error checking as well so we can display
         // "backend refused to connect or something"
         const imgBlob = await blob.blob();
@@ -39,7 +45,8 @@ export default function Image({ imgNum }) {
                 "/characters",
         );
         if (!res.ok) {
-            console.log("the response is not ok");
+            setErr("Failed to fetch characters");
+            return;
         }
         const chars = await res.json();
         console.log(chars);
@@ -49,8 +56,7 @@ export default function Image({ imgNum }) {
     // TODO: make popup div not go past the borders of the image
     const onClick = (e) => {
         const domImgRect = e.target.getBoundingClientRect();
-        // +8 because by default the dom rectangle's x and y vals are 8
-        // might be kind of a hardcoded fix
+        // just set the div's position to where the cursor is
         setXPos(e.clientX);
         setYPos(e.clientY);
         console.log(domImgRect);
@@ -68,16 +74,20 @@ export default function Image({ imgNum }) {
         console.log("Relative mouse y location in decimal: " + relY);
     };
 
-    if (!imgURL) {
+    if (!imgURL && !err) {
         fetchImage();
     }
 
-    if (!characters) {
+    if (!characters && !err) {
         fetchCharacters();
     }
 
-    if (!characters || !imgURL) {
+    if ((!characters || !imgURL) && !err) {
         return <p>Loading...</p>;
+    }
+
+    if (err) {
+        return <div>{err}</div>;
     }
 
     return (
