@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -16,9 +20,27 @@ img {
     align-items: center;
 }
 
-.portraits {
+.portraitContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
+}
+
+.portrait {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.portrait>img {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+}
+
+.portrait>p {
+    padding: 5px;
+    margin: 0;
 }

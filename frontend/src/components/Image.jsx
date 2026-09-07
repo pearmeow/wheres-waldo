@@ -1,5 +1,6 @@
 import "./Image.css";
 import Popup from "./Popup.jsx";
+import Portrait from "./Portrait.jsx";
 import { useEffect, useState } from "react";
 import useComponentVisible from "../hooks/useComponentVisible.jsx";
 
@@ -74,7 +75,11 @@ export default function Image({ imgNum }) {
                 const imgBlob = await blob.blob();
                 const imgURL = URL.createObjectURL(imgBlob);
                 portraits.push(
-                    <img src={imgURL} alt={char.name} key={char.id} />,
+                    <Portrait
+                        imgURL={imgURL}
+                        charName={char.name}
+                        key={char.id}
+                    />,
                 );
             }
             console.log("portraits");
@@ -120,7 +125,7 @@ export default function Image({ imgNum }) {
 
     return (
         <>
-            <div className={"portraits"}>{portraits}</div>
+            <div className={"portraitContainer"}>{portraits}</div>
             <div className={"imgContainer"} ref={ref}>
                 <img
                     src={imgURL}
