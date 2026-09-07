@@ -1,6 +1,6 @@
 import "./Image.css";
 import Popup from "./Popup.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useComponentVisible from "../hooks/useComponentVisible.jsx";
 
 export default function Image({ imgNum }) {
@@ -13,6 +13,7 @@ export default function Image({ imgNum }) {
     const [relX, setRelX] = useState(null);
     const [relY, setRelY] = useState(null);
     const [characters, setCharacters] = useState(null);
+    const [portraits, setPortraits] = useState(null);
     const [imgURL, setImgURL] = useState(null);
     const [text, setText] = useState(
         <p>Please pick the character you would like to verify.</p>,
@@ -20,38 +21,69 @@ export default function Image({ imgNum }) {
     // hook for detecting outside clicks
     const { ref, isComponentVisible, setIsComponentVisible } =
         useComponentVisible(true);
-    const fetchImage = async () => {
-        console.log("fetch image");
-        const blob = await fetch(
-            import.meta.env.VITE_BACKEND_URL + "pictures/" + imgNum,
-        );
-        if (!blob.ok) {
-            setErr("Failed to fetch image");
-            return;
-        }
-        // TODO: add error checking as well so we can display
-        // "backend refused to connect or something"
-        const imgBlob = await blob.blob();
-        console.log(imgBlob);
-        setImgURL(URL.createObjectURL(imgBlob));
-    };
 
-    const fetchCharacters = async () => {
-        console.log("fetch chara");
-        const res = await fetch(
-            import.meta.env.VITE_BACKEND_URL +
-                "pictures/" +
-                imgNum +
-                "/characters",
-        );
-        if (!res.ok) {
-            setErr("Failed to fetch characters");
-            return;
-        }
-        const chars = await res.json();
-        console.log(chars);
-        setCharacters(chars);
-    };
+    useEffect(() => {
+        const fetchImage = async () => {
+            console.log("fetch image");
+            const blob = await fetch(
+                import.meta.env.VITE_BACKEND_URL + "pictures/" + imgNum,
+            );
+            if (!blob.ok) {
+                setErr("Failed to fetch image");
+                return;
+            }
+            const imgBlob = await blob.blob();
+            console.log(imgBlob);
+            setImgURL(URL.createObjectURL(imgBlob));
+        };
+
+        const fetchCharacters = async () => {
+            console.log("fetch chara");
+            const res = await fetch(
+                import.meta.env.VITE_BACKEND_URL +
+                    "pictures/" +
+                    imgNum +
+                    "/characters",
+            );
+            if (!res.ok) {
+                setErr("Failed to fetch characters");
+                return;
+            }
+            const chars = await res.json();
+            console.log(chars);
+            await fetchPortraits(chars);
+            setCharacters(chars);
+        };
+        const fetchPortraits = async (characters) => {
+            // for each character in characters fetch a portrait and
+            // add it to an array
+            const portraits = [];
+            for (let char of characters) {
+                const blob = await fetch(
+                    import.meta.env.VITE_BACKEND_URL +
+                        "pictures/" +
+                        imgNum +
+                        "/characters/" +
+                        char.id,
+                );
+                if (!blob.ok) {
+                    setErr("Failed to fetch image");
+                    return;
+                }
+                const imgBlob = await blob.blob();
+                portraits.push(URL.createObjectURL(imgBlob));
+            }
+            console.log("portraits");
+            console.log(portraits);
+            setPortraits(portraits);
+        };
+
+        const fetchAll = async () => {
+            await fetchImage();
+            await fetchCharacters();
+        };
+        fetchAll();
+    }, [imgNum]);
 
     // TODO: make popup div not go past the borders of the image
     const onClick = (e) => {
@@ -73,14 +105,6 @@ export default function Image({ imgNum }) {
         console.log("Relative mouse x location in decimal: " + relX);
         console.log("Relative mouse y location in decimal: " + relY);
     };
-
-    if (!imgURL && !err) {
-        fetchImage();
-    }
-
-    if (!characters && !err) {
-        fetchCharacters();
-    }
 
     if ((!characters || !imgURL) && !err) {
         return <p>Loading...</p>;
