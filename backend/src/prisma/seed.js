@@ -25,7 +25,16 @@ async function main() {
             positionX: 0.6895787139689579,
             positionY: 0.3609910384818134,
             name: "Waldo",
-            path: resolve("./assets/1_waldo_mugshot.png"),
+            path: resolve("./assets/1_waldo_portrait.png"),
+        },
+    });
+    await prisma.character.create({
+        data: {
+            pictureId: 1,
+            positionX: 0.165771484375,
+            positionY: 0.3476968796433878,
+            name: "King",
+            path: resolve("./assets/1_king_portrait.png"),
         },
     });
     // Fetch all users with their posts
