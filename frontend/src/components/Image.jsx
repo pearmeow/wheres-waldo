@@ -22,6 +22,7 @@ export default function Image({ imgNum }) {
     const { ref, isComponentVisible, setIsComponentVisible } =
         useComponentVisible(true);
 
+    // fetch EVERYTHING
     useEffect(() => {
         const fetchImage = async () => {
             console.log("fetch image");
@@ -71,7 +72,10 @@ export default function Image({ imgNum }) {
                     return;
                 }
                 const imgBlob = await blob.blob();
-                portraits.push(URL.createObjectURL(imgBlob));
+                const imgURL = URL.createObjectURL(imgBlob);
+                portraits.push(
+                    <img src={imgURL} alt={char.name} key={char.id} />,
+                );
             }
             console.log("portraits");
             console.log(portraits);
@@ -115,21 +119,28 @@ export default function Image({ imgNum }) {
     }
 
     return (
-        <div className={"imgContainer"} ref={ref}>
-            <img src={imgURL} onClick={onClick} alt="a where's waldo puzzle" />
-            {xPos && yPos && relX && relY && (
-                <Popup
-                    xPos={xPos}
-                    yPos={yPos}
-                    relX={relX}
-                    relY={relY}
-                    text={text}
-                    hidden={!isComponentVisible}
-                    setText={setText}
-                    imgNum={imgNum}
-                    characters={characters}
+        <>
+            <div className={"portraits"}>{portraits}</div>
+            <div className={"imgContainer"} ref={ref}>
+                <img
+                    src={imgURL}
+                    onClick={onClick}
+                    alt="a where's waldo puzzle"
                 />
-            )}
-        </div>
+                {xPos && yPos && relX && relY && (
+                    <Popup
+                        xPos={xPos}
+                        yPos={yPos}
+                        relX={relX}
+                        relY={relY}
+                        text={text}
+                        hidden={!isComponentVisible}
+                        setText={setText}
+                        imgNum={imgNum}
+                        characters={characters}
+                    />
+                )}
+            </div>
+        </>
     );
 }
