@@ -22,7 +22,13 @@ describe("singular character works", () => {
             .expect("Content-Type", "image/png")
             .expect(200, done);
     });
-    test("second character does not work", (done) => {
-        request(app).get("/pictures/1/characters/2").expect(404, done);
+    test("second character works", (done) => {
+        request(app)
+            .get("/pictures/1/characters/2")
+            .expect("Content-Type", "image/png")
+            .expect(200, done);
+    });
+    test("third character does not work", (done) => {
+        request(app).get("/pictures/1/characters/3").expect(404, done);
     });
 });
